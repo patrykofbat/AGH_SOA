@@ -14,10 +14,11 @@
 </h:head>
 <h:body>
     <div class="container-fluid">
-            <div class="row">
-                <h:form id="books-form">
-                    <div class="col">
-                        <h:dataTable styleClass="table table-striped" id="books-table" value="#{books.books}" var="book">
+        <div class="row">
+            <h:form id="books-form">
+                <div class="col">
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                        <h:dataTable styleClass="table table-bordered table-striped mb-0" id="books-table" value="#{books.books}" var="book">
                             <h:column>
                                 <f:facet name="header">Number</f:facet>
                                 #{book.id + 1}.
@@ -53,15 +54,20 @@
                                 </div>
                             </h:column>
                         </h:dataTable>
-                        <div class="d-flex justify-content-end">
-                            <div class="p-2 bg-info">Count: #{books.checkedCount}</div>
-                            <div class="p-2 bg-info">Sum: #{books.sum} #{books.currency}</div>
-                        </div>
-                        <h:commandButton class="btn btn-large btn-success" value="Submit" action="#{books.submit}" />
                     </div>
-                </h:form>
-                <div class="col-2">
-                    <div class="position-fixed">
+                    <div class="d-flex justify-content-end">
+                        <div class="p-2 bg-info">Count: #{books.checkedCount}</div>
+                        <div class="p-2 bg-info">Sum: #{books.sum} #{books.currency}</div>
+                    </div>
+                    <h:commandButton class="btn btn-large btn-success" value="Submit" action="#{books.submit}" />
+                </div>
+            </h:form>
+            <div class="col">
+                <div class="position-fixed">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Filter menu
+                    </button>
+                    <div class="collapse" id="collapseExample">
                         <h2>Filters</h2>
                         <h:form id="filter-form">
                             <c:forEach items="#{books.filtersLabels}" var="label">
@@ -76,13 +82,14 @@
                                     <f:ajax listener="#{books.currencyListener}" render="books-form:books-table"/>
                                 </h:selectOneMenu>
                             </div>
-                            <h:commandButton id="ajax-button" styleClass="btn btn-success" value="filter" action="#{books.filterData}">
+                            <h:commandButton id="ajax-button" styleClass="btn btn-success" value="Filter" action="#{books.filterData}">
                                 <f:ajax execute="filter-form" render="books-form:books-table"/>
                             </h:commandButton>
                         </h:form>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
 </h:body>
 </html>
