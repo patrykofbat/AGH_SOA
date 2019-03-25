@@ -106,17 +106,24 @@ public class Books {
 
     public void filterData() {
         for (Map.Entry<String, String> entry: this.filters.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue());
-            switch (entry.getKey()) {
-                case "title":
-                    this.books.removeIf(book -> !book.getTitle().toLowerCase().contains(entry.getValue().toLowerCase()));
-                    break;
-                case "author":
-                    this.books.removeIf(book -> !book.getAuthor().toLowerCase().contains(entry.getValue().toLowerCase()));
-                    break;
-                case "category":
-                    this.books.removeIf(book -> !book.getCategory().toLowerCase().contains(entry.getValue().toLowerCase()));
-                    break;
+            if (!entry.getValue().isEmpty()) {
+                switch (entry.getKey()) {
+                    case "title":
+                        this.books.removeIf(book -> !book.getTitle().toLowerCase().contains(entry.getValue().toLowerCase()));
+                        break;
+                    case "author":
+                        this.books.removeIf(book -> !book.getAuthor().toLowerCase().contains(entry.getValue().toLowerCase()));
+                        break;
+                    case "category":
+                        this.books.removeIf(book -> !book.getCategory().toLowerCase().contains(entry.getValue().toLowerCase()));
+                        break;
+                    case "priceMin":
+                        this.books.removeIf(book -> !(book.getPrice() >= Double.parseDouble(entry.getValue())));
+                        break;
+                    case "priceMax":
+                        this.books.removeIf(book -> !(book.getPrice() <= Double.parseDouble(entry.getValue())));
+                        break;
+                }
             }
         }
         BooksUtil.reIndex(this.books);
