@@ -21,6 +21,7 @@ import java.util.*;
 public class Books {
     private int checkedCount;
     private ArrayList<Book> books;
+    private ArrayList<Book> booksData;
     private Map<Integer, Boolean> checked = new HashMap<>();
     private Map<String, String> filtersLabels = new HashMap<>() {{
         put("title", "Title");
@@ -37,7 +38,8 @@ public class Books {
     private double sum;
 
     public Books() {
-        this.books = BooksUtil.loadDataFromCsv(getClass().getClassLoader().getResource("assets/books.csv").getFile());
+        this.booksData = BooksUtil.loadDataFromCsv(getClass().getClassLoader().getResource("assets/books.csv").getFile());
+        this.books = new ArrayList<>(booksData);
     }
 
     public ArrayList<Book> getBooks() {
@@ -105,6 +107,7 @@ public class Books {
     }
 
     public void filterData() {
+        this.books = new ArrayList<>(booksData);
         for (Map.Entry<String, String> entry: this.filters.entrySet()) {
             if (!entry.getValue().isEmpty()) {
                 switch (entry.getKey()) {

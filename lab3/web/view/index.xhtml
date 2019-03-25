@@ -10,51 +10,50 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script type="text/javascript" src="../js/main.js"></script>
+    <link rel="stylesheet" href="../styles/index.css"/>
 
 </h:head>
 <h:body>
-    <div class="container-fluid">
-        <div class="row">
+    <div class="containerApp">
+        <div class="tableContainer">
             <h:form id="books-form">
                 <div class="col">
-                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                        <h:dataTable styleClass="table table-bordered table-striped mb-0" id="books-table" value="#{books.books}" var="book">
-                            <h:column>
-                                <f:facet name="header">Number</f:facet>
-                                #{book.id + 1}.
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Title</f:facet>
-                                #{book.title}
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Author</f:facet>
-                                #{book.author}
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Category</f:facet>
-                                #{book.category}
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Price</f:facet>
-                                #{book.price}
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Currency</f:facet>
-                                #{book.currency}
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Pages</f:facet>
-                                #{book.pages}
-                            </h:column>
-                            <h:column>
-                                <div class="form-check">
-                                    <f:facet name="header">Choosen</f:facet>
-                                    <h:selectBooleanCheckbox styleClass="form-check-input" value="#{books.checked[book.id]}"/>
-                                </div>
-                            </h:column>
-                        </h:dataTable>
-                    </div>
+                    <h:dataTable styleClass="table table-bordered table-striped mb-0" id="books-table" value="#{books.books}" var="book">
+                        <h:column>
+                            <f:facet name="header">Number</f:facet>
+                            #{book.id + 1}.
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Title</f:facet>
+                            #{book.title}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Author</f:facet>
+                            #{book.author}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Category</f:facet>
+                            #{book.category}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Price</f:facet>
+                            #{book.price}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Currency</f:facet>
+                            #{book.currency}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Pages</f:facet>
+                            #{book.pages}
+                        </h:column>
+                        <h:column>
+                            <div class="form-check">
+                                <f:facet name="header">Choosen</f:facet>
+                                <h:selectBooleanCheckbox styleClass="form-check-input" value="#{books.checked[book.id]}"/>
+                            </div>
+                        </h:column>
+                    </h:dataTable>
                     <div class="d-flex justify-content-end">
                         <div class="p-2 bg-info">Count: #{books.checkedCount}</div>
                         <div class="p-2 bg-info">Sum: #{books.sum} #{books.currency}</div>
@@ -62,32 +61,30 @@
                     <h:commandButton class="btn btn-large btn-success" value="Submit" action="#{books.submit}" />
                 </div>
             </h:form>
-            <div class="col">
-                <div class="position-fixed">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                        Filter menu
-                    </button>
-                    <div class="collapse" id="collapseExample">
-                        <h2>Filters</h2>
-                        <h:form id="filter-form">
-                            <c:forEach items="#{books.filtersLabels}" var="label">
-                                <div class="form-group">
-                                    <h:outputLabel for="#{label.key}" value="#{label.value}"/>
-                                    <h:inputText styleClass="form-control" id="#{label.key}" value="#{books.filters[label.key]}"/>
-                                </div>
-                            </c:forEach>
-                            <div class="form-group">
-                                <h:selectOneMenu styleClass="form-control" value="#{books.currency}">
-                                    <f:selectItems value="#{books.currencies}" />
-                                    <f:ajax listener="#{books.currencyListener}" render="books-form:books-table"/>
-                                </h:selectOneMenu>
-                            </div>
-                            <h:commandButton id="ajax-button" styleClass="btn btn-success" value="Filter" action="#{books.filterData}">
-                                <f:ajax execute="filter-form" render="books-form:books-table"/>
-                            </h:commandButton>
-                        </h:form>
+        </div>
+        <div class="sidebarContainer">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                Filter menu
+            </button>
+            <div class="collapse" id="collapseExample">
+                <h2>Filters</h2>
+                <h:form id="filter-form">
+                    <c:forEach items="#{books.filtersLabels}" var="label">
+                        <div class="form-group">
+                            <h:outputLabel for="#{label.key}" value="#{label.value}"/>
+                            <h:inputText styleClass="form-control" id="#{label.key}" value="#{books.filters[label.key]}"/>
+                        </div>
+                    </c:forEach>
+                    <div class="form-group">
+                        <h:selectOneMenu styleClass="form-control" value="#{books.currency}">
+                            <f:selectItems value="#{books.currencies}" />
+                            <f:ajax listener="#{books.currencyListener}" render="books-form:books-table"/>
+                        </h:selectOneMenu>
                     </div>
-                </div>
+                    <h:commandButton id="ajax-button" styleClass="btn btn-success" value="Filter" action="#{books.filterData}">
+                        <f:ajax execute="filter-form" render="books-form:books-table"/>
+                    </h:commandButton>
+                </h:form>
             </div>
         </div>
     </div>

@@ -1,0 +1,37 @@
+body {
+    margin: 0;
+    width: 100vh;
+    height: 100vh;
+    padding: 0;
+}
+
+.containerApp {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: center;
+}
+
+.tableContainer {
+    flex: 1 0 auto;
+    align-self: stretch;
+    overflow-y: scroll;
+}
+
+.sidebarContainer {
+    width: 350px;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#collapseExample {
+    margin-top: 20px;
+}
