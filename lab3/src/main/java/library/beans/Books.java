@@ -170,6 +170,7 @@ public class Books {
     }
 
     public void submit() {
+        this.setSum(0);
         int checkedCounter = 0;
         for (Map.Entry<Integer, Boolean> entry: this.checked.entrySet()) {
             if (entry.getValue()) {
