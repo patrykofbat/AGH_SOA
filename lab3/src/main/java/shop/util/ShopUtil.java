@@ -16,12 +16,13 @@ public class ShopUtil {
                     break;
                 case "mail":
                     String msg = "";
-                    String patternMail= "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
+                    String patternMail= "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
                     if(input.getValue().isEmpty())
                         msg += "This field is required.\n";
                     if(!input.getValue().matches(patternMail))
                         msg += "Invalid field format.\n";
-                    errors.put("mail", msg);
+                    if(msg.length() > 0)
+                        errors.put("mail", msg);
                     break;
                 case "age":
                     try {

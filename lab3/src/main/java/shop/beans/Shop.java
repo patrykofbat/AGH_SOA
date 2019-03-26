@@ -1,13 +1,15 @@
-package shop;
+package shop.beans;
 
 
 import shop.util.ShopUtil;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import java.util.HashMap;
 import java.util.Map;
 
 @ManagedBean(name="shop")
+@SessionScoped
 public class Shop {
 
     private HashMap<String, String> basicInputs = new HashMap<>() {{
@@ -45,6 +47,8 @@ public class Shop {
     }};
 
     private Map<String, String> errors = new HashMap<>();
+
+    private boolean additionalInputs;
 
     public Map<String, String> getErrors() {
         return errors;
@@ -110,13 +114,20 @@ public class Shop {
         this.basicInputsLabels = basicInputsLabels;
     }
 
-    public void submit() {
+    public String submit() {
         this.errors = ShopUtil.validateData(this.basicInputs);
         System.out.println(this.errors.size());
+        for (Map.Entry<String, String> entry: this.errors.entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+        if (this.errors.size() == 0) {
+            return "additional";
+        }
+        return null;
     }
 
     public void updateSex() {
-
+        System.out.println("update");
     }
 
 }
