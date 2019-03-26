@@ -1,6 +1,8 @@
 package shop;
 
 
+import shop.util.ShopUtil;
+
 import javax.faces.bean.ManagedBean;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +43,16 @@ public class Shop {
         put("Kobieta", "0");
         put("Mężczyzna", "1");
     }};
+
+    private Map<String, String> errors = new HashMap<>();
+
+    public Map<String, String> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(Map<String, String> errors) {
+        this.errors = errors;
+    }
 
     public HashMap<String, String> getWomenInputs() {
         return womenInputs;
@@ -99,8 +111,12 @@ public class Shop {
     }
 
     public void submit() {
-        for (Map.Entry<String, String> entry: this.basicInputs.entrySet()) {
-            System.out.println(entry.getKey() + " " +entry.getValue());
-        }
+        this.errors = ShopUtil.validateData(this.basicInputs);
+        System.out.println(this.errors.size());
     }
+
+    public void updateSex() {
+
+    }
+
 }
