@@ -1,0 +1,9 @@
+.box {
+    min-width: 600px;
+}
+
+.box-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

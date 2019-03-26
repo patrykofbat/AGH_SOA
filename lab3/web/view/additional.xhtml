@@ -1,12 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://xmlns.jcp.org/jsf/core" xml:lang="en" lang="en">
 <h:head>
     <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../styles/shop.css"/>
 </h:head>
 <h:body>
-<h2>hello</h2>
+    <h:form id="shop-form">
+        <div class="form-group">
+            <h:outputLabel for="spendMoney" value='#{additional.additionalLabels["spendMoney"]}'/>
+            <h:selectOneMenu id="spendMoney" styleClass="form-control"  value='#{additional.additonals["spendMoney"]}'>
+                <f:selectItems  value="#{additional.spendMoneyOptions}"/>
+            </h:selectOneMenu>
+        </div>
+        <div class="form-group">
+            <h:outputLabel for="buyingPeriod" value='#{additional.additionalLabels["buyingPeriod"]}'/>
+            <h:selectOneMenu id="buyingPeriod" styleClass="form-control"  value='#{additional.additonals["buyingPeriod"]}'>
+                <f:selectItems  value="#{additional.buyingPeriodOptions}"/>
+            </h:selectOneMenu>
+        </div>
+        <div class="form-group">
+            <h:outputLabel for="preferColor" value='#{additional.additionalLabels["preferColor"]}'/>
+            <h:selectOneMenu id="preferColor" styleClass="form-control" value='#{additional.additonals["preferColor"]}'>
+                <f:selectItems  value="#{additional.preferColorOptions}"/>
+            </h:selectOneMenu>
+        </div>
+        <div class="form-group">
+            <h:outputLabel for="preferType" value='#{additional.additionalLabels["preferType"]}'/>
+            <c:choose>
+                <c:when test='#{shop.basicInputs["sex"].equals("0")}'>
+                    <h:selectOneMenu id="preferType" styleClass="form-control" value='#{additional.additonals["preferType"]}'>
+                        <f:selectItems  value="#{additional.preferTypeOptions}"/>
+                    </h:selectOneMenu>
+                </c:when>
+                <c:otherwise>
+                    <h:inputText styleClass="form-control" value='#{additional.additonals["preferType"]}'/>
+                </c:otherwise>
+            </c:choose>
+        </div>
+        <h:commandButton styleClass="btn btn-large btn-primary" value="Submit" action="#{additional.submit}"/>
+    </h:form>
 </h:body>
 </html>
