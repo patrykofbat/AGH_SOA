@@ -54,16 +54,18 @@
                             </div>
                         </h:column>
                     </h:dataTable>
-                    <div class="d-flex justify-content-end">
-                        <div class="p-2 bg-info">Count: #{books.checkedCount}</div>
-                        <div class="p-2 bg-info">Sum: #{books.sum} #{books.currency}</div>
+                    <div class="right-corner">
+                        <div class="d-flex justify-content-end">
+                            <div class="p-2">Count: #{books.checkedCount}</div>
+                            <div class="p-2">Sum: #{books.sum} <h:outputLabel id="currencySum" value="#{books.currency}"/></div>
+                            <h:commandButton class="btn btn-large btn-success" value="Order" action="#{books.submit}" />
+                        </div>
                     </div>
-                    <h:commandButton class="btn btn-large btn-success" value="Submit" action="#{books.submit}" />
                 </div>
             </h:form>
         </div>
         <div class="sidebarContainer">
-            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            <button id="filterButton" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                 Filter menu
             </button>
             <div class="collapse" id="collapseExample">
@@ -72,18 +74,17 @@
                     <c:forEach items="#{books.filtersLabels}" var="label">
                         <div class="form-group">
                             <h:outputLabel for="#{label.key}" value="#{label.value}"/>
-                            <h:inputText styleClass="form-control" id="#{label.key}" value="#{books.filters[label.key]}"/>
+                            <h:inputText styleClass="form-control" id="#{label.key}" value="#{books.filters[label.key]}">
+                                <f:ajax event="keyup" listener="#{books.filterData}" render="books-form:books-table"/>
+                            </h:inputText>
                         </div>
                     </c:forEach>
                     <div class="form-group">
                         <h:selectOneMenu styleClass="form-control" value="#{books.currency}">
                             <f:selectItems value="#{books.currencies}" />
-                            <f:ajax listener="#{books.currencyListener}" render="books-form:books-table"/>
+                            <f:ajax listener="#{books.currencyListener}" render="books-form:books-table books-form:currencySum"/>
                         </h:selectOneMenu>
                     </div>
-                    <h:commandButton id="ajax-button" styleClass="btn btn-success" value="Filter" action="#{books.filterData}">
-                        <f:ajax execute="filter-form" render="books-form:books-table"/>
-                    </h:commandButton>
                 </h:form>
             </div>
         </div>

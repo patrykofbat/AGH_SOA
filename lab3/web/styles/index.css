@@ -35,3 +35,13 @@ body {
 #collapseExample {
     margin-top: 20px;
 }
+
+.right-corner {
+    position: fixed;
+    right: 50px;
+    bottom: 30px;
+}
+
+#filterButton {
+    margin-top: 20px;
+}
