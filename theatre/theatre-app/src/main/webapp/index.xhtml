@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+   <link rel="stylesheet" href="./styles/index.css"/>
+
+</h:head>
+<h:body>
+   <div class="AppContainer">
+      <div class="NavBar">
+         <h3>Theatre</h3>
+         <h:panelGroup id="balance" styleClass="display: block;">
+            <h3>User balance: #{theatre.userBalance}</h3>
+         </h:panelGroup>
+         <div class="form-group">
+            <h:form>
+               <h:selectOneMenu styleClass="form-control UsersSelect" value="#{theatre.selectedUserToken}">
+                  <f:selectItem value="#{null}" itemLabel="Select"/>
+                  <f:selectItems value="#{theatre.usersList}" var="user" itemValue="#{user.token}" itemLabel="#{user.name}"/>
+                  <f:ajax listener="#{theatre.updateUser}" render="balance" />
+               </h:selectOneMenu>
+            </h:form>
+         </div>
+      </div>
+      <div class="TheatreArea">
+         <h:form>
+            <div class="TheatreSeats">
+                  <ui:repeat value="#{theatre.seats}" var="seat">
+                     <label class="Seat">
+                        <h:selectBooleanCheckbox styleClass="SeatCheckbox" value="#{theatre.checkedSeats[seat.index]}" disabled="#{theatre.checkedSeats[seat.index]}"/>
+                        <span class="checkmark">#{seat.index}</span>
+                     </label>
+                  </ui:repeat>
+            </div>
+            <h:commandButton styleClass="btn btn-large btn-primary" value="rezerwuj" action="#{theatre.submit}" />
+         </h:form>
+      </div>
+   </div>
+</h:body>
+</html>

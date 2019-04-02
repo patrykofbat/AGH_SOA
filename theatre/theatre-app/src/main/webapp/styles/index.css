@@ -1,0 +1,93 @@
+body, html {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+body {
+    position: fixed;
+}
+
+.AppContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.NavBar {
+    padding: 15px;
+    width: 100%;
+    height: 75px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: slategrey;
+}
+
+.UsersSelect {
+    width: 200px;
+}
+
+.TheatreArea {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.TheatreSeats {
+    width: 1120px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.Seat {
+    width: 60px;
+    height: 60px;
+    margin: 10px;
+    display: block;
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 60px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.Seat input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 60px;
+    background-color: forestgreen;
+}
+
+.Seat:hover input ~ .checkmark {
+    background-color: #1f5f1f;
+}
+
+.Seat input:checked ~ .checkmark {
+    background-color: #ff4500;
+}
+
+.Seat input:checked ~ .checkmark:after {
+    display: block;
+}
+
