@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -110,6 +111,11 @@ public class TheatreManager {
         System.out.println(sum);
         if (sum <= user.getBalance()) {
             user = this.seatsBeanManager.buyTicket(userSeats, user);
+            ArrayList<Seat> currentUserList = user.getSeats();
+            if (currentUserList != null) {
+                userSeats.addAll(currentUserList);
+            }
+            Collections.sort(userSeats, ((o1, o2) -> o1.getIndex() - o2.getIndex()));
             user.setSeats(userSeats);
             this.usersBeanManager.setUser(user);
             this.disabledSeats = new HashMap<>(this.checkedSeats);
