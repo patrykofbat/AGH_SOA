@@ -17,30 +17,34 @@
    <div class="AppContainer">
       <div class="NavBar">
          <h3>Theatre</h3>
-         <h:panelGroup id="balance" styleClass="display: block;">
+         <h:panelGroup id="balance" style="display: block;">
             <h3>User balance: #{theatre.userBalance}</h3>
          </h:panelGroup>
+          <h:panelGroup id="PlacedSeats" style="display: block;">
+              <h3>User seats: #{theatre.usersSeats}</h3>
+          </h:panelGroup>
          <div class="form-group">
-            <h:form>
+            <h:form id="users">
                <h:selectOneMenu styleClass="form-control UsersSelect" value="#{theatre.selectedUserToken}">
                   <f:selectItem value="#{null}" itemLabel="Select"/>
                   <f:selectItems value="#{theatre.usersList}" var="user" itemValue="#{user.token}" itemLabel="#{user.name}"/>
-                  <f:ajax listener="#{theatre.updateUser}" render="balance" />
+                  <f:ajax listener="#{theatre.updateUser}" render="balance PlacedSeats SeatsForm" />
                </h:selectOneMenu>
             </h:form>
          </div>
       </div>
       <div class="TheatreArea">
-         <h:form>
+         <h:form id="SeatsForm">
             <div class="TheatreSeats">
                   <ui:repeat value="#{theatre.seats}" var="seat">
                      <label class="Seat">
-                        <h:selectBooleanCheckbox styleClass="SeatCheckbox" value="#{theatre.checkedSeats[seat.index]}" disabled="#{theatre.checkedSeats[seat.index]}"/>
+                        <h:selectBooleanCheckbox styleClass="SeatCheckbox" value="#{theatre.checkedSeats[seat.index]}" disabled="#{theatre.disabledSeats[seat.index]}"/>
                         <span class="checkmark">#{seat.index}</span>
                      </label>
                   </ui:repeat>
             </div>
             <h:commandButton styleClass="btn btn-large btn-primary" value="rezerwuj" action="#{theatre.submit}" />
+             <h:outputLabel styleClass="ErrorMessage" value="#{theatre.errorMessage}"/>
          </h:form>
       </div>
    </div>

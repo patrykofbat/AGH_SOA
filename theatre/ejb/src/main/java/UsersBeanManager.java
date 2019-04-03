@@ -29,10 +29,17 @@ public class UsersBeanManager implements IUsersBeanManager{
                 .orElse(null);
     }
 
+
+    @Override
+    public void setUser(User user) {
+        this.users.set(user.getIndex(), user);
+    }
+
     private ArrayList<User> loadUsers() {
         ArrayList<User> users = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             User user = new User(
+                    i,
                 "User" + i,
                 20.0 * (i + 1),
                 null,

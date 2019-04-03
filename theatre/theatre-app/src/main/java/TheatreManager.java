@@ -8,7 +8,6 @@ import javax.faces.bean.SessionScoped;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 @ManagedBean(name = "theatre")
 @SessionScoped
@@ -22,6 +21,8 @@ public class TheatreManager {
     private IUsersBeanManager usersBeanManager;
 
     private HashMap<Integer, Boolean> checkedSeats = new HashMap<>();
+
+    private HashMap<Integer, Boolean> disabledSeats = new HashMap<>();
 
     private String selectedUserToken;
 
@@ -56,6 +57,13 @@ public class TheatreManager {
         }
     }
 
+    public HashMap<Integer, Boolean> getDisabledSeats() {
+        return disabledSeats;
+    }
+
+    public void setDisabledSeats(HashMap<Integer, Boolean> disabledSeats) {
+        this.disabledSeats = disabledSeats;
+    }
 
     public ArrayList<Seat> getSeats() {
         return seatsBeanManager.getSeatsList();
@@ -69,13 +77,29 @@ public class TheatreManager {
         this.checkedSeats = checkedSeats;
     }
 
+    public String getUsersSeats() {
+        if (this.selectedUserToken == null) {
+            return "";
+        }
+        else {
+            User user = this.usersBeanManager.getUserByToken(this.selectedUserToken);
+            return user.getUserSeatsString();
+        }
+    }
+
     public void submit() {
         ArrayList<Seat> seats = this.seatsBeanManager.getSeatsList();
         ArrayList<Seat> userSeats = new ArrayList<>();
+
+        if (this.selectedUserToken == null) {
+            return;
+        }
+
         System.out.println(this.selectedUserToken);
         double sum = 0.0;
         for (Map.Entry<Integer, Boolean> entry: this.checkedSeats.entrySet()) {
-            if (entry.getValue()) {
+            boolean isDisabledSeat = this.disabledSeats.getOrDefault(entry.getKey(), false);
+            if (entry.getValue() && !isDisabledSeat) {
                 Seat seat = seats.get(entry.getKey());
                 seat.setStatus(SeatStatus.RESERVED);
                 sum += seat.getPrice();
@@ -83,10 +107,15 @@ public class TheatreManager {
             }
         }
         User user = this.usersBeanManager.getUserByToken(this.selectedUserToken);
+        System.out.println(sum);
         if (sum <= user.getBalance()) {
-            this.seatsBeanManager.buyTicket(userSeats, user);
+            user = this.seatsBeanManager.buyTicket(userSeats, user);
+            user.setSeats(userSeats);
+            this.usersBeanManager.setUser(user);
+            this.disabledSeats = new HashMap<>(this.checkedSeats);
         } else {
             this.errorMessage = "Masz za mało środków";
+            this.checkedSeats = new HashMap<>();
         }
     }
 

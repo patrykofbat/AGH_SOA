@@ -31,11 +31,12 @@ public class SeatsBeanManager implements ISeatsBeanManager{
 
     @Override
     @Lock
-    public void buyTicket(ArrayList<Seat> seats, User user) {
+    public User buyTicket(ArrayList<Seat> seats, User user) {
         for (Seat seat: seats) {
             this.setSeatStatus(seat.getIndex(), SeatStatus.RESERVED);
             user.setBalance(user.getBalance() - seat.getPrice());
         }
+        return user;
     }
 
     @Lock

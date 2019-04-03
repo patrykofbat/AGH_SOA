@@ -5,16 +5,26 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class User implements Serializable {
+    private int index;
     private String name;
     private double balance;
     private ArrayList<Seat> seats;
     private UUID token;
 
-    public User(String name, double balance, ArrayList<Seat> seats, UUID token) {
+    public User(int index, String name, double balance, ArrayList<Seat> seats, UUID token) {
+        this.index = index;
         this.name = name;
         this.balance = balance;
         this.seats = seats;
         this.token = token;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public String getName() {
@@ -47,6 +57,18 @@ public class User implements Serializable {
 
     public void setToken(UUID token) {
         this.token = token;
+    }
+
+    public String getUserSeatsString() {
+        StringBuilder string = new StringBuilder();
+        if (this.seats == null) {
+            return "";
+        }
+        for (Seat s: this.seats) {
+            string.append(s.getIndex());
+            string.append(" ");
+        }
+        return string.toString();
     }
 
 }

@@ -87,7 +87,14 @@ body {
     background-color: #ff4500;
 }
 
+.Seat input:disabled ~ .checkmark {
+    background-color: #772500;
+}
 .Seat input:checked ~ .checkmark:after {
     display: block;
+}
+.ErrorMessage {
+    color: red;
+    margin-left: 20px;
 }
 
