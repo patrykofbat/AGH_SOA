@@ -1,6 +1,14 @@
 package library.pojo;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "books")
 public class Book {
+    @Id
     private Integer id;
     private String title;
     private String author;
@@ -9,7 +17,6 @@ public class Book {
     private String currency;
     private String pages;
     private String publisher;
-    private String image;
 
     public Integer getId() {
         return id;
@@ -74,15 +81,6 @@ public class Book {
     public void setPages(String pages) {
         this.pages = pages;
     }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
 
     @Override
     public String toString() {

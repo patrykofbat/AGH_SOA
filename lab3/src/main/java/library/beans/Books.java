@@ -6,15 +6,20 @@ import library.pojo.Book;
 import library.utils.BooksUtil;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @ManagedBean(name="books")
 @ViewScoped
@@ -38,6 +43,12 @@ public class Books {
     private double sum;
 
     public Books() {
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("JPA-Zajecia");
+        EntityManager em = factory.createEntityManager();
+        List<Book> books = em.createQuery("from Book", Book.class).getResultList();
+        for (Book book: books) {
+            System.out.println(book.toString());
+        }
         this.booksData = BooksUtil.loadDataFromCsv(getClass().getClassLoader().getResource("assets/books.csv").getFile());
         this.books = new ArrayList<>(booksData);
     }
