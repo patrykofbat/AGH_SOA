@@ -2,27 +2,23 @@ package library.beans;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import library.dao.BookDao;
+import library.dao.Dao;
 import library.pojo.Book;
 import library.utils.BooksUtil;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.faces.bean.SessionScoped;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @ManagedBean(name="books")
-@ViewScoped
+@SessionScoped
 public class Books {
     private int checkedCount;
     private ArrayList<Book> books;
@@ -39,18 +35,26 @@ public class Books {
     private String[] currencies = {"USD", "PLN", "EUR"};
     private String currency = "PLN";
     private Map<String, String> filters = new HashMap<>();
+    private Dao<Book> bookDao;
+    private Book bookInsert;
 
     private double sum;
+    private int checkedCounter = 0;
 
     public Books() {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("JPA-Zajecia");
-        EntityManager em = factory.createEntityManager();
-        List<Book> books = em.createQuery("from Book", Book.class).getResultList();
-        for (Book book: books) {
-            System.out.println(book.toString());
-        }
-        this.booksData = BooksUtil.loadDataFromCsv(getClass().getClassLoader().getResource("assets/books.csv").getFile());
+        this.bookDao = new BookDao();
+        List<Book> books = this.bookDao.getAll();
+        this.booksData = new ArrayList<>(books);
         this.books = new ArrayList<>(booksData);
+        this.bookInsert = new Book();
+    }
+
+    public Book getBookInsert() {
+        return bookInsert;
+    }
+
+    public void setBookInsert(Book bookInsert) {
+        this.bookInsert = bookInsert;
     }
 
     public ArrayList<Book> getBooks() {
@@ -180,18 +184,40 @@ public class Books {
         BooksUtil.changeCurrency(this.books, this.currency, Double.parseDouble(rate));
     }
 
+    public void delete(String id) {
+        Optional<Book> bookOptional = this.bookDao.get(Integer.parseInt(id));
+        bookOptional.ifPresent(book -> this.bookDao.delete(book));
+        this.updateBooks();
+    }
+
+    public void addBook() {
+        this.bookInsert.setCurrency("PLN");
+        this.bookInsert.setPublisher("Unknown");
+        this.bookDao.save(this.bookInsert);
+        this.updateBooks();
+    }
+
     public void submit() {
         this.setSum(0);
-        int checkedCounter = 0;
         for (Map.Entry<Integer, Boolean> entry: this.checked.entrySet()) {
             if (entry.getValue()) {
-                this.sum += this.books.get(entry.getKey()).getPrice();
-                checkedCounter++;
+                this.books.forEach(book -> {
+                    if (book.getId().equals(entry.getKey())) {
+                        this.sum += book.getPrice();
+                        this.checkedCounter++;
+                    }
+                });
             }
         }
         this.sum = Math.round(this.sum * 100.0) / 100.0;
-        this.checkedCount = checkedCounter;
+        this.checkedCount = this.checkedCounter;
+        this.checkedCounter = 0;
 
+    }
+
+    private void updateBooks() {
+        this.booksData = new ArrayList<>(this.bookDao.getAll());
+        this.books = new ArrayList<>(this.booksData);
     }
 
 }
