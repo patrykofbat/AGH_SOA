@@ -8,7 +8,7 @@ import library.pojo.Book;
 import library.utils.BooksUtil;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +18,7 @@ import java.net.URLConnection;
 import java.util.*;
 
 @ManagedBean(name="books")
-@SessionScoped
+@ViewScoped
 public class Books {
     private int checkedCount;
     private ArrayList<Book> books;
@@ -195,6 +195,10 @@ public class Books {
         this.bookInsert.setPublisher("Unknown");
         this.bookDao.save(this.bookInsert);
         this.updateBooks();
+    }
+
+    public void edit(Book book) {
+        System.out.println(book.toString());
     }
 
     public void submit() {

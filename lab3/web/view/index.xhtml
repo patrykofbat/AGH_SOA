@@ -51,8 +51,13 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">Actions</f:facet>
-                            <h:form>
+                            <h:form id="book-delete">
                                 <h:commandButton  value="X" styleClass="btn btn-danger btn-sm" action="#{books.delete(book.id)}">
+                                    <f:ajax render="books-form"/>
+                                </h:commandButton>
+                            </h:form>
+                            <h:form id="book-edit">
+                                <h:commandButton  value="edit" styleClass="btn btn-primary btn-sm" action="#{books.edit(book)}">
                                     <f:ajax render="books-form"/>
                                 </h:commandButton>
                             </h:form>

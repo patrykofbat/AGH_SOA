@@ -16,6 +16,7 @@ public class BookDao implements Dao<Book> {
         this.entityManager = factory.createEntityManager();
     }
 
+
     @Override
     public Optional<Book> get(int id) {
         return Optional.ofNullable(entityManager.find(Book.class, id));
@@ -23,23 +24,24 @@ public class BookDao implements Dao<Book> {
 
     @Override
     public List<Book> getAll() {
-        Query query = entityManager.createQuery("SELECT e FROM Book e", Book.class);
+        Query query = entityManager.createQuery("FROM Book e", Book.class);
         return query.getResultList();
     }
 
     @Override
     public void save(Book book) {
-        this.entityManager.getTransaction().begin();
-        this.entityManager.createNativeQuery("INSERT INTO books (author, category, currency, pages, price, publisher, title) VALUES (?, ?, ?, ?, ?, ?, ?)")
-                .setParameter(1, book.getAuthor())
-                .setParameter(2, book.getCategory())
-                .setParameter(3, book.getCurrency())
-                .setParameter(4, book.getPages())
-                .setParameter(5, book.getPrice())
-                .setParameter(6, book.getPublisher())
-                .setParameter(7, book.getTitle())
-                .executeUpdate();
-        this.entityManager.getTransaction().commit();
+//        this.entityManager.getTransaction().begin();
+//        this.entityManager.createNativeQuery("INSERT INTO books (author, category, currency, pages, price, publisher, title) VALUES (?, ?, ?, ?, ?, ?, ?)")
+//                .setParameter(1, book.getAuthor())
+//                .setParameter(2, book.getCategory())
+//                .setParameter(3, book.getCurrency())
+//                .setParameter(4, book.getPages())
+//                .setParameter(5, book.getPrice())
+//                .setParameter(6, book.getPublisher())
+//                .setParameter(7, book.getTitle())
+//                .executeUpdate();
+//        this.entityManager.getTransaction().commit();
+        executeInsideTransaction(entityManager -> entityManager.persist(book));
     }
 
     @Override
