@@ -1,47 +1,50 @@
 body {
     margin: 0;
-    width: 100vh;
-    height: 100vh;
     padding: 0;
+    position: fixed;
+    overflow: hidden;
 }
 
 .containerApp {
+    box-sizing: border-box;
     height: 100vh;
     width: 100vw;
     margin: 0;
     padding: 0;
 
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: nowrap;
     justify-content: flex-start;
     align-content: center;
 }
 
+.navBar {
+    background-color: #497fad;
+    min-height: 75px;
+    width: 100%;
+}
+.content {
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
 .tableContainer {
+    width: 100%;
     align-self: stretch;
     overflow-y: scroll;
 }
 
-.sidebarContainer {
-    width: 350px;
+.sidebar {
+    height: 100%;
+    width: 600px;
     align-self: stretch;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#collapseExample {
-    margin-top: 20px;
-}
-
-.right-corner {
-    position: fixed;
-    right: 50px;
-    bottom: 30px;
-}
-
-#filterButton {
-    margin-top: 20px;
-    margin-bottom: 20px;
+.margin {
+    margin: 0 5px 0 5px;
 }

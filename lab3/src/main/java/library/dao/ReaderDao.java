@@ -1,41 +1,43 @@
 package library.dao;
 
-import library.model.entities.Book;
+import library.model.entities.BookLoan;
+import library.model.entities.Reader;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class BookDao implements Dao<Book> {
+public class ReaderDao implements Dao<Reader> {
+
 
     private EntityManager entityManager;
 
-    public BookDao() {
+    public ReaderDao() {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("JPA-Zajecia");
         this.entityManager = factory.createEntityManager();
     }
 
 
     @Override
-    public Optional<Book> get(int id) {
-        return Optional.ofNullable(entityManager.find(Book.class, id));
+    public Optional<Reader> get(int id) {
+        return Optional.ofNullable(entityManager.find(Reader.class, id));
     }
 
     @Override
-    public List<Book> getAll() {
-        Query query = entityManager.createQuery("FROM Book e", Book.class);
+    public List<Reader> getAll() {
+        Query query = entityManager.createQuery("FROM Reader e", Reader.class);
         return query.getResultList();
     }
 
     @Override
-    public void save(Book book) {
-        executeInsideTransaction(entityManager -> entityManager.persist(book));
+    public void save(Reader reader) {
+        executeInsideTransaction(entityManager -> entityManager.persist(reader));
     }
 
     @Override
-    public void delete(Book book) {
-        executeInsideTransaction(entityManager -> entityManager.remove(book));
+    public void delete(Reader reader) {
+        executeInsideTransaction(entityManager -> entityManager.remove(reader));
 
     }
 

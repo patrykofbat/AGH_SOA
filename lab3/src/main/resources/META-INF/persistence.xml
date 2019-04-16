@@ -4,12 +4,15 @@
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
              version="2.2">
     <persistence-unit name="JPA-Zajecia">
-    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-    <jta-data-source>java:/MySqlDS</jta-data-source>
-    <class>library.pojo.Book</class>
-    <properties>
-        <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
-        <property name="hibernate.hbm2ddl.auto" value="update" />
-    </properties>
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <jta-data-source>java:/MySqlDS</jta-data-source>
+        <class>library.model.entities.Book</class>
+        <class>library.model.entities.BookAuthor</class>
+        <class>library.model.entities.BookLoan</class>
+        <class>library.model.entities.Reader</class>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+        </properties>
     </persistence-unit>
 </persistence>

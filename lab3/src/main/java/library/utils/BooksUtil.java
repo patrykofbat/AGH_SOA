@@ -1,6 +1,6 @@
 package library.utils;
 
-import library.pojo.Book;
+import library.model.entities.Book;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -26,7 +26,6 @@ public class BooksUtil {
                 Book book = new Book();
                 book.setId(id);
                 book.setTitle(bookCsv[0]);
-                book.setAuthor(bookCsv[1]);
                 book.setCategory(bookCsv[2]);
                 book.setPages(bookCsv[3]);
                 book.setPrice(Double.parseDouble(bookCsv[5]));

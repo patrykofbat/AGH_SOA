@@ -4,7 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import library.dao.BookDao;
 import library.dao.Dao;
-import library.pojo.Book;
+import library.model.entities.Book;
 import library.utils.BooksUtil;
 
 import javax.faces.bean.ManagedBean;
@@ -130,7 +130,6 @@ public class Books {
                         this.books.removeIf(book -> !book.getTitle().toLowerCase().contains(entry.getValue().toLowerCase()));
                         break;
                     case "author":
-                        this.books.removeIf(book -> !book.getAuthor().toLowerCase().contains(entry.getValue().toLowerCase()));
                         break;
                     case "category":
                         this.books.removeIf(book -> !book.getCategory().toLowerCase().contains(entry.getValue().toLowerCase()));
@@ -192,7 +191,6 @@ public class Books {
 
     public void addBook() {
         this.bookInsert.setCurrency("PLN");
-        this.bookInsert.setPublisher("Unknown");
         this.bookDao.save(this.bookInsert);
         this.updateBooks();
     }

@@ -9,8 +9,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="../js/main.js"></script>
-    <link rel="stylesheet" href="../styles/index.css"/>
+    <link rel="stylesheet" href="../../styles/index.css"/>
 
 </h:head>
 <h:body>
@@ -18,14 +17,14 @@
         <div class="tableContainer">
             <h:form id="books-form">
                 <div class="col">
-                    <h:dataTable styleClass="table table-bordered table-striped mb-0" id="books-table" value="#{books.books}" var="book">
+                    <h:dataTable styleClass="table table-bordered table-striped" id="books-table" value="#{books.books}" var="book">
                         <h:column>
                             <f:facet name="header">Title</f:facet>
                             #{book.title}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Author</f:facet>
-                            #{book.author}
+                            #{book.fullAuthorName}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Category</f:facet>
@@ -51,16 +50,12 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">Actions</f:facet>
-                            <h:form id="book-delete">
                                 <h:commandButton  value="X" styleClass="btn btn-danger btn-sm" action="#{books.delete(book.id)}">
                                     <f:ajax render="books-form"/>
                                 </h:commandButton>
-                            </h:form>
-                            <h:form id="book-edit">
                                 <h:commandButton  value="edit" styleClass="btn btn-primary btn-sm" action="#{books.edit(book)}">
                                     <f:ajax render="books-form"/>
                                 </h:commandButton>
-                            </h:form>
                         </h:column>
                     </h:dataTable>
                     <div class="right-corner">
@@ -114,7 +109,7 @@
                                     <span>Title</span>
                                     <h:inputText styleClass="form-control" value="#{books.bookInsert.title}"/>
                                     <span>Author</span>
-                                    <h:inputText styleClass="form-control" value="#{books.bookInsert.author}"/>
+                                    <h:inputText styleClass="form-control" value="#{books.bookInsert.author.id}"/>
                                     <span>Category</span>
                                     <h:inputText styleClass="form-control" value="#{books.bookInsert.category}"/>
                                     <span>Price(PLN)</span>
