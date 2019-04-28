@@ -15,7 +15,7 @@ public class BookLoan {
     private Date returnDate;
     private Reader reader;
     private Book book;
-    private boolean canEdit = false;
+    private transient boolean canEdit = false;
 
     public BookLoan() {
         this.book = new Book();
@@ -23,7 +23,8 @@ public class BookLoan {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     public int getId() {
         return id;
     }
@@ -71,7 +72,6 @@ public class BookLoan {
         this.book = book;
     }
 
-    @Transient
     public boolean isCanEdit() {
         return canEdit;
     }

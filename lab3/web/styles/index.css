@@ -12,7 +12,7 @@ body {
     padding: 0;
 
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: nowrap;
     justify-content: flex-start;
     align-content: center;
@@ -23,8 +23,25 @@ body {
     overflow-y: scroll;
 }
 
+.content {
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+.navBar {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #2a2b2e;
+    min-height: 75px;
+    width: 100%;
+}
+
 .sidebarContainer {
-    width: 350px;
+    width: 600px;
     align-self: stretch;
     display: flex;
     flex-direction: column;
@@ -44,4 +61,32 @@ body {
 #filterButton {
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+.user-info {
+    color: #fff;
+    border-bottom: 1px solid #fff;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 auto;
+    justify-content: space-between;
+}
+
+.navbar-button {
+    color: #fff;
+}
+
+.navbar-button:hover {
+    color: #fff;
+}
+
+.form-box {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
 }

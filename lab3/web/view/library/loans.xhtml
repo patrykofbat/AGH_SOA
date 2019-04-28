@@ -14,12 +14,15 @@
 <h:body>
     <div class="containerApp">
         <div class="navBar">
-            <div class="form-group">
+            <div>
                 <h:form>
-                    <h:selectOneMenu styleClass="form-control" value="#{booksLoans.currentReaderId}">
+                    <div class="form-box">
+                    <h:selectOneMenu styleClass="form-control input-size" value="#{booksLoans.currentReaderId}">
                         <f:selectItems value="#{booksLoans.allReaders}" var="reader" itemLabel="#{reader.fullName}" itemValue="#{reader.id}"/>
                         <f:ajax listener="#{booksLoans.changedReader}" render="loans-form:loans-table"/>
                     </h:selectOneMenu>
+                    <h:commandButton action="index" styleClass="btn btn-lg btn-link navbar-button" value="Go to books"/>
+                    </div>
                 </h:form>
             </div>
         </div>
@@ -53,10 +56,12 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">Actions</f:facet>
-                                <h:commandButton styleClass="btn btn-sm btn-danger margin" value="x" action="#{booksLoans.delete(bookLoan)}">
-                                </h:commandButton>
-                                <h:commandButton styleClass="btn btn-sm btn-warning margin" value="edit" action="#{booksLoans.edit(bookLoan)}">
-                                </h:commandButton>
+                                <div class="action-buttons">
+                                    <h:commandButton styleClass="btn btn-sm btn-danger margin" value="x" action="#{booksLoans.delete(bookLoan)}">
+                                    </h:commandButton>
+                                    <h:commandButton styleClass="btn btn-sm btn-warning margin" value="edit" action="#{booksLoans.edit(bookLoan)}">
+                                    </h:commandButton>
+                                </div>
                         </h:column>
                     </h:dataTable>
                 </h:form>

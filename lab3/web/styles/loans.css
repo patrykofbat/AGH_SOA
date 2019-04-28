@@ -20,7 +20,12 @@ body {
 }
 
 .navBar {
-    background-color: #497fad;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #2a2b2e;
     min-height: 75px;
     width: 100%;
 }
@@ -45,6 +50,30 @@ body {
     align-items: center;
 }
 
-.margin {
-    margin: 0 5px 0 5px;
+.input-size {
+    width: 300px;
+}
+
+
+.form-box {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.navbar-button {
+    color: #fff;
+}
+
+.navbar-button:hover {
+    color: #fff;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 auto;
+    justify-content: space-between;
 }

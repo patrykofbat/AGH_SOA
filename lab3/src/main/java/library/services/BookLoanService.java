@@ -9,9 +9,17 @@ import java.util.List;
 public class BookLoanService {
 
     private BookLoanDao bookLoanDao;
+    private static BookLoanService bookLoanService;
 
     public BookLoanService() {
         this.bookLoanDao = new BookLoanDao();
+    }
+
+    public static BookLoanService getInstance() {
+        if (BookLoanService.bookLoanService == null) {
+            return new BookLoanService();
+        }
+        return BookLoanService.bookLoanService;
     }
 
     public List<BookLoan> getAllBooksLoans() {
@@ -32,6 +40,10 @@ public class BookLoanService {
 
     public List<BookLoan> findAll(BookLoan bookLoan) {
         return this.bookLoanDao.findAll(bookLoan);
+    }
+
+    public void save(BookLoan bookLoan) {
+        this.bookLoanDao.save(bookLoan);
     }
 
 }

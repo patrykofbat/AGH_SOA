@@ -10,9 +10,11 @@ import library.services.ReaderService;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
+import java.util.Date;
 import java.util.List;
 
-@SessionScoped
+@ViewScoped
 @ManagedBean(name = "booksLoans")
 public class BooksLoansBean {
 
@@ -20,12 +22,14 @@ public class BooksLoansBean {
     private ReaderService readerService;
     private List<BookLoan> bookLoansList;
     private BookLoan bookLoanFilters;
+    private final int defaultReaderId = 2;
+    private Reader currentReader;
 
     public BooksLoansBean() {
-        this.bookLoanService = new BookLoanService();
+        this.bookLoanService = BookLoanService.getInstance();
         this.readerService = new ReaderService();
         this.bookLoanFilters = new BookLoan();
-        this.bookLoanFilters.getReader().setId(2);
+        this.bookLoanFilters.getReader().setId(this.defaultReaderId);
         this.bookLoansList = this.bookLoanService.findAllByReaderId(this.bookLoanFilters.getReader().getId());
     }
 
@@ -80,5 +84,20 @@ public class BooksLoansBean {
 
     public void setCurrentReaderId(int currentReaderId) {
         this.bookLoanFilters.getReader().setId(currentReaderId);
+    }
+
+    public Reader getCurrentReader() {
+        Reader reader = new Reader();
+        reader.setId(this.defaultReaderId);
+        return this.readerService.getReader(this.getCurrentReaderId()).orElse(reader);
+    }
+
+    public void loanBook(Book book) {
+        System.out.println(book.toString());
+        BookLoan bookLoan = new BookLoan();
+        bookLoan.setReader(this.getCurrentReader());
+        bookLoan.setBook(book);
+        bookLoan.setLoanDate(new Date());
+        this.bookLoanService.save(bookLoan);
     }
 }
