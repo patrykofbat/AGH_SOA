@@ -12,7 +12,7 @@ public class Sender {
     @Inject
     private JMSContext context;
 
-    @Resource(lookup = "java:jboss/jms/queue/SOA_Test")
+    @Resource(mappedName = "java:jboss/exported/jms/queue/SOA_Test")
     private static Queue queue;
 
     public void sendMessage(String message) {
