@@ -15,12 +15,10 @@
 <h:body>
     <div class="containerApp">
         <div class="navBar">
-            <h:form>
-                <div class="form-box">
-                    <h3 class="user-info">Logged as #{booksLoans.currentReader.fullName}</h3>
-                    <h:commandButton value="Go to loans" styleClass="btn btn-lg btn-link navbar-button" action="loans"/>
-                </div>
-            </h:form>
+            <div class="form-box">
+                <h3 class="user-info">Logged as #{booksLoans.currentReader.fullName}</h3>
+                <a href="loans.xhtml" class="btn btn-lg btn-link navbar-button">Go to loans</a>
+            </div>
         </div>
         <div class="content">
             <div class="tableContainer">

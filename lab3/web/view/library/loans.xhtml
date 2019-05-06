@@ -14,17 +14,15 @@
 <h:body>
     <div class="containerApp">
         <div class="navBar">
-            <div>
-                <h:form>
-                    <div class="form-box">
+            <h:form>
+                <div class="form-box">
                     <h:selectOneMenu styleClass="form-control input-size" value="#{booksLoans.currentReaderId}">
                         <f:selectItems value="#{booksLoans.allReaders}" var="reader" itemLabel="#{reader.fullName}" itemValue="#{reader.id}"/>
                         <f:ajax listener="#{booksLoans.changedReader}" render="loans-form:loans-table"/>
                     </h:selectOneMenu>
-                    <h:commandButton action="index" styleClass="btn btn-lg btn-link navbar-button" value="Go to books"/>
-                    </div>
-                </h:form>
-            </div>
+                    <a href="index.xhtml" class="btn btn-lg btn-link navbar-button">Go to books</a>
+                </div>
+            </h:form>
         </div>
         <div class="content">
             <div class="tableContainer">

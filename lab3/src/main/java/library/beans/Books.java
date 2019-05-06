@@ -4,10 +4,13 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import library.dao.BookDao;
 import library.dao.Dao;
+import library.jms.Sender;
 import library.model.entities.Book;
 import library.utils.BooksUtil;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,7 +21,7 @@ import java.net.URLConnection;
 import java.util.*;
 
 @ManagedBean(name="books")
-@ViewScoped
+@SessionScoped
 public class Books {
     private int checkedCount;
     private ArrayList<Book> books;
@@ -41,12 +44,16 @@ public class Books {
     private double sum;
     private int checkedCounter = 0;
 
+    @EJB(lookup = "java:global/lab3_war_exploded/Sender!library.jms.Sender")
+    private Sender sender;
+
     public Books() {
         this.bookDao = new BookDao();
         List<Book> books = this.bookDao.getAll();
         this.booksData = new ArrayList<>(books);
         this.books = new ArrayList<>(booksData);
         this.bookInsert = new Book();
+//        this.sender = new Sender();
     }
 
     public Book getBookInsert() {
@@ -196,6 +203,7 @@ public class Books {
     }
 
     public void edit(Book book) {
+        this.sender.sendMessage("editing book");
         System.out.println(book.toString());
     }
 

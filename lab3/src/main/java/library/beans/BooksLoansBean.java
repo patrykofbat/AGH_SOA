@@ -2,12 +2,14 @@ package library.beans;
 
 
 import library.dao.BookLoanDao;
+import library.jms.MyMessageBean;
 import library.model.entities.Book;
 import library.model.entities.BookLoan;
 import library.model.entities.Reader;
 import library.services.BookLoanService;
 import library.services.ReaderService;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
@@ -24,6 +26,7 @@ public class BooksLoansBean {
     private BookLoan bookLoanFilters;
     private final int defaultReaderId = 2;
     private Reader currentReader;
+    private MyMessageBean myMessageBean;
 
     public BooksLoansBean() {
         this.bookLoanService = BookLoanService.getInstance();
@@ -31,6 +34,7 @@ public class BooksLoansBean {
         this.bookLoanFilters = new BookLoan();
         this.bookLoanFilters.getReader().setId(this.defaultReaderId);
         this.bookLoansList = this.bookLoanService.findAllByReaderId(this.bookLoanFilters.getReader().getId());
+        myMessageBean = new MyMessageBean();
     }
 
     public BookLoan getBookLoanFilters() {
