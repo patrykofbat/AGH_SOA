@@ -16,7 +16,7 @@ import javax.faces.bean.ViewScoped;
 import java.util.Date;
 import java.util.List;
 
-@ViewScoped
+@SessionScoped
 @ManagedBean(name = "booksLoans")
 public class BooksLoansBean {
 

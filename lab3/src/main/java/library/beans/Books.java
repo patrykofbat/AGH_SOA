@@ -8,10 +8,13 @@ import library.jms.Sender;
 import library.model.entities.Book;
 import library.utils.BooksUtil;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.jms.*;
+import javax.jms.Queue;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,8 +47,16 @@ public class Books {
     private double sum;
     private int checkedCounter = 0;
 
-    @EJB(lookup = "java:global/lab3_war_exploded/Sender!library.jms.Sender")
-    private Sender sender;
+    @Resource(mappedName = "java:/JmsXA")
+    private static ConnectionFactory cf;
+
+    private Connection connection;
+
+    @Resource(lookup = "java:/jms/queue/SoaQueue")
+    private static Queue queue;
+
+//    @EJB(lookup = "java:global/lab3_war_exploded/Sender!library.jms.Sender")
+//    private Sender sender;
 
     public Books() {
         this.bookDao = new BookDao();
@@ -203,7 +214,8 @@ public class Books {
     }
 
     public void edit(Book book) {
-        this.sender.sendMessage("editing book");
+        this.sendMessage("editing book");
+//        this.sender.sendMessage("editing book");
         System.out.println(book.toString());
     }
 
@@ -228,6 +240,35 @@ public class Books {
     private void updateBooks() {
         this.booksData = new ArrayList<>(this.bookDao.getAll());
         this.books = new ArrayList<>(this.booksData);
+    }
+
+    private void sendMessage(String txt) {
+        try {
+            connection = cf.createConnection();
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            MessageProducer publisher = null;
+
+            publisher = session.createProducer(queue);
+
+            connection.start();
+
+            TextMessage message = session.createTextMessage(txt);
+            publisher.send(message);
+
+        }
+        catch (Exception exc) {
+            exc.printStackTrace();
+        }
+        finally {
+            if (connection != null)   {
+                try {
+                    connection.close();
+                } catch (JMSException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
     }
 
 

@@ -9,7 +9,7 @@ import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
 @MessageDriven(activationConfig = {
-        @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "java:jms/queue/SOA_test"),
+        @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "java:jms/queue/SoaQueue"),
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 })
 public class MyMessageBean implements MessageListener {
