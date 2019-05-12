@@ -1,45 +1,45 @@
 package dao;
 
 import models.Movie;
+import models.User;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class MovieDAO implements Dao<Movie> {
-
+public class UserDAO implements Dao<User> {
     private EntityManager entityManager;
 
-    public MovieDAO() {
+    public UserDAO() {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("JPA-Zajecia");
         this.entityManager = factory.createEntityManager();
     }
 
     @Override
-    public Optional<Movie> get(long id) {
-        return Optional.ofNullable(entityManager.find(Movie.class, id));
+    public Optional<User> get(long id) {
+        return Optional.ofNullable(entityManager.find(User.class, id));
     }
 
     @Override
-    public List<Movie> getAll() {
-        Query query = entityManager.createQuery("FROM Movie m", Movie.class);
+    public List<User> getAll() {
+        Query query = entityManager.createQuery("FROM User m", User.class);
         return query.getResultList();
     }
 
     @Override
-    public void save(Movie movie) {
-        executeInsideTransaction(entityMng -> entityMng.persist(movie));
+    public void save(User user) {
+        executeInsideTransaction(entityMng -> entityMng.persist(user));
     }
 
     @Override
-    public void delete(Movie movie) {
-        executeInsideTransaction(entityMng -> entityMng.remove(movie));
+    public void delete(User user) {
+        executeInsideTransaction(entityMng -> entityMng.remove(user));
     }
 
     @Override
-    public void update(Movie movie) {
-        executeInsideTransaction(entityMng -> entityMng.merge(movie));
+    public void update(User user) {
+        executeInsideTransaction(entityMng -> entityMng.merge(user));
     }
 
     private void executeInsideTransaction(Consumer<EntityManager> action) {
@@ -54,4 +54,5 @@ public class MovieDAO implements Dao<Movie> {
             throw e;
         }
     }
+
 }
