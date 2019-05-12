@@ -8,7 +8,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Optional;
 
-@Path("/films")
+@Path("/users")
 public class Users {
     private UserDAO userDao;
 
