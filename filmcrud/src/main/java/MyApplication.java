@@ -11,6 +11,7 @@ public class MyApplication extends Application {
     public MyApplication()
     {
         singletons.add(new Films());
+        singletons.add(new Users());
     }
 
     @Override
