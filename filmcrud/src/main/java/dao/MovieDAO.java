@@ -1,8 +1,12 @@
 package dao;
 
 import models.Movie;
+import models.User;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -40,6 +44,16 @@ public class MovieDAO implements Dao<Movie> {
     @Override
     public void update(Movie movie) {
         executeInsideTransaction(entityMng -> entityMng.merge(movie));
+    }
+
+    public List<Movie> findAllByTitle(String title) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Movie> query = criteriaBuilder.createQuery(Movie.class);
+        Root<Movie> movieRoot = query.from(Movie.class);
+        query.select(movieRoot)
+                .where(criteriaBuilder.equal(movieRoot.get("title"), title));
+
+        return this.entityManager.createQuery(query).getResultList();
     }
 
     private void executeInsideTransaction(Consumer<EntityManager> action) {

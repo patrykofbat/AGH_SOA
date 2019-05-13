@@ -22,13 +22,22 @@ public class Films {
         return Response.status(Response.Status.OK).entity(movieList).build();
     }
 
+    @GET
+    @Path("/{title}")
+    @Produces("application/json")
+    public Response getMovieByTitle(@PathParam("title") String title) {
+        List<Movie> movieList = this.movieDAO.findAllByTitle(title);
+        return Response.status(Response.Status.OK).entity(movieList).build();
+    }
+
+
     @POST
     @Consumes("application/json")
     @Produces("application/json")
     public Response postMovie(Movie movie) {
         System.out.println(movie);
         this.movieDAO.save(movie);
-        return Response.status(Response.Status.OK).entity(movie).build();
+        return Response.status(Response.Status.CREATED).entity(movie).build();
     }
 
     @PUT
@@ -37,6 +46,19 @@ public class Films {
     public Response putMovie(Movie movie) {
         System.out.println(movie);
         this.movieDAO.update(movie);
+        return Response.status(Response.Status.OK).entity(movie).build();
+    }
+
+    @PUT
+    @Consumes("application/json")
+    @Produces("application/json")
+    @Path("/{id}")
+    public Response updateMovieTitle(@PathParam("id") long id,  String url) {
+        Optional<Movie> movie = this.movieDAO.get(id);
+        movie.ifPresent(mov -> {
+            mov.setUrl(url);
+            this.movieDAO.update(mov);
+        });
         return Response.status(Response.Status.OK).entity(movie).build();
     }
 

@@ -12,6 +12,7 @@ public class MyApplication extends Application {
     {
         singletons.add(new Films());
         singletons.add(new Users());
+        singletons.add(new Osoby());
     }
 
     @Override

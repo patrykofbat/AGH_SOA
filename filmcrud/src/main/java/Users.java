@@ -29,7 +29,7 @@ public class Users {
     public Response postUser(User user) {
         System.out.println(user);
         this.userDao.save(user);
-        return Response.status(Response.Status.OK).entity(user).build();
+        return Response.status(Response.Status.CREATED).entity(user).build();
     }
 
     @PUT
