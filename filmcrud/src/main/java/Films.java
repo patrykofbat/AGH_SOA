@@ -1,15 +1,19 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.MovieDAO;
 import models.Movie;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Path("/films")
 public class Films {
 
     private MovieDAO movieDAO;
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     public Films() {
         this.movieDAO = new MovieDAO();
@@ -20,6 +24,24 @@ public class Films {
     public Response getMovies() {
         List<Movie> movieList = this.movieDAO.getAll();
         return Response.status(Response.Status.OK).entity(movieList).build();
+    }
+
+    @GET
+    @Produces("text/uri-list")
+    public String getMoviesUriList() throws Exception {
+        List<Movie> movieList = this.movieDAO.getAll();
+        List<String> moviesUrl = movieList.stream().map(Movie::getUrl).collect(Collectors.toList());
+        return objectMapper.writeValueAsString(moviesUrl);
+    }
+
+    @GET
+    @Path("/image")
+    @Produces({"image/png", "image/jpg", "image/gif"})
+    public Response downloadFile() {
+        File file = new File(this.getClass().getClassLoader().getResource("Studio projektowe.png").getFile());
+        Response.ResponseBuilder responseBuilder = Response.ok((Object) file);
+        responseBuilder.header("Content-Disposition", "attachment; filename=\"MyPngImageFile.png\"");
+        return responseBuilder.build();
     }
 
     @GET
