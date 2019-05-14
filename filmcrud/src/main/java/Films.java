@@ -38,7 +38,7 @@ public class Films {
     @Path("/image")
     @Produces({"image/png", "image/jpg", "image/gif"})
     public Response downloadFile() {
-        File file = new File(this.getClass().getClassLoader().getResource("Studio projektowe.png").getFile());
+        File file = new File(this.getClass().getClassLoader().getResource("Studio_projektowe.png").getFile());
         Response.ResponseBuilder responseBuilder = Response.ok((Object) file);
         responseBuilder.header("Content-Disposition", "attachment; filename=\"MyPngImageFile.png\"");
         return responseBuilder.build();
